@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>ROYAL HOTEL | Responsive Travel & Tourism Template</title>
+        {% load static %}
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Favicons -->
+
+        <link href="{% static 'website/img/favicon.ico' %}" rel="icon">
+        <link href="{% static 'website/img/apple-favicon.png' %}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+        <!-- Vendor CSS File -->
+        <link href="{% static 'website/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'website/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'website/vendor/animate/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'website/vendor/slick/slick.css' %}" rel="stylesheet">
+        <link href="{% static 'website/vendor/slick/slick-theme.css' %}" rel="stylesheet">
+        <link href="{% static 'website/vendor/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+        <!-- Main Stylesheet File -->
+        <link href="{% static 'website/css/hover-style.css' %}" rel="stylesheet">
+        <link href="{% static 'website/css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Header Section Start -->
+        <header id="header">
+            <a href="/" class="logo"><img src="{% static 'website/img/logo.jpg' %}" alt="logo"></a>
+            <div class="phone"><i class="fa fa-phone"></i>+1 234 567 8900</div>
+            <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
+            <nav class="main-menu top-menu">
+                <ul>
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="about">About Us</a></li>
+                    <li><a href="room">Rooms</a></li>
+                    <li><a href="amenities">Amenities</a></li>
+                    <li><a href="booking">Booking</a></li>
+                    <li><a href="login">Login</a></li>
+                    <li><a href="contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Header Section End -->
+{% block content %}{% endblock %}
+
+
+
+
+
+
+
+            <!-- Footer Section Start -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="social">
+                            <a href=""><li class="fa fa-instagram"></li></a>
+                            <a href=""><li class="fa fa-twitter"></li></a>
+                            <a href=""><li class="fa fa-facebook-f"></li></a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <p>Copyright &#169; 2045 <a href="">Your Site Name</a> All Rights Reserved.</p>
+
+						<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+						<p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Section End -->
+
+
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- Vendor JavaScript File -->
+        <script src="{% static 'website/vendor/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'website/vendor/jquery/jquery-migrate.min.js' %}"></script>
+        <script src="{% static 'website/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'website/vendor/easing/easing.min.js' %}"></script>
+        <script src="{% static 'website/vendor/stickyjs/sticky.js' %}"></script>
+        <script src="{% static 'website/vendor/superfish/hoverIntent.js' %}"></script>
+        <script src="{% static 'website/vendor/superfish/superfish.min.js' %}"></script>
+        <script src="{% static 'website/vendor/wow/wow.min.js' %}"></script>
+        <script src="{% static 'website/vendor/slick/slick.min.js' %}"></script>
+        <script src="{% static 'website/vendor/tempusdominus/js/moment.min.js' %}"></script>
+        <script src="{% static 'website/vendor/tempusdominus/js/moment-timezone.min.js' %}"></script>
+        <script src="{% static 'website/vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+        <!-- Booking Javascript File -->
+        <script src="{% static 'website/js/booking.js' %}"></script>
+        <script src="{% static 'website/js/jqBootstrapValidation.min.js' %}"></script>
+
+        <!-- Main Javascript File -->
+        <script src="{% static 'website/js/main.js' %}"></script>
+
+
+
+
+    </body>
+</html>
