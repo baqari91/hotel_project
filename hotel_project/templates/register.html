@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!-- Login Section Start -->
+        <div id="login">
+
+            <div class="container">
+                <div class="section-header">
+                    <h4>Welcome to [Hotel Name]! Create your account and unlock exclusive benefits.</h4>
+                    <p>
+                        Start your personalized journey with us by registering today.
+                    </p>
+                </div>
+                <div class="login-form">
+                    <form method="POST" action="register">
+                        {% csrf_token %}
+                        <div class="form-row" style="width: 82%; margin: auto;">
+                            <div class="control-group col-sm-6">
+                                <label>Username</label>
+                                <input type="text" class="form-control" required="required" name="username" />
+                            </div>
+                            <div class="control-group col-sm-6">
+                                <label>Email</label>
+                                <input type="email" class="form-control" required="required" name="email" />
+                            </div>
+                        </div>
+                        <div class="form-row" style="width: 82%; margin: auto;">
+                            <div class="control-group col-sm-6">
+                                <label>Your Password</label>
+                                <input type="password" class="form-control" required="required" name="password" />
+                            </div>
+                            <div class="control-group col-sm-6">
+                                <label>Repeat Your Password</label>
+                                <input type="password" class="form-control" required="required" name="repeat_password" />
+                            </div>
+                        </div>
+                        <div class="button" style="text-align: center;"><button type="submit">Registration</button></div>
+                        {% for message in messages %}
+                        <label style="color: red; margin-left: 10px;">{{ message }}</label>
+                    </form>{% endfor %}
+                </div>
+            </div>
+        </div>
+<!-- Login Section End -->
+
+
+
+
+{% endblock %}

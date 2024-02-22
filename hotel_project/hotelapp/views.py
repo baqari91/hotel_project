@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.models import User, auth
+from django.contrib import messages
 
 
 # Create your views here.
@@ -21,7 +23,57 @@ def booking(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            messages.info(request, 'Email or password you entered is incorrect. '
+                                   'Please check your credentials and try again.')
+            return redirect('login')
+
+    else:
+        return render(request, 'login.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
+
+
+def profile(request):
+    return render(request, 'profile.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        repeat_password = request.POST['repeat_password']
+
+        if password == repeat_password:
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'An account with this email already exists.')
+                return redirect('register')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request, 'An account with this username already exists.')
+                return redirect('register')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
+                return redirect('login')
+        else:
+            messages.info(request, "Unfortunately, the passwords you provided don't match. Kindly "
+                                   "double-check and enter the same password in both fields.")
+            return redirect('register')
+    else:
+        return render(request, 'register.html')
 
 
 def room(request):

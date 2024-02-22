@@ -7,57 +7,29 @@
         <div id="login">
             <div class="container">
                 <div class="section-header">
-                    <h2>Registration / Login</h2>
+                    <h4>Welcome Back to [Hotel Name]! Sign in to your account.</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in mi libero. Quisque convallis, enim at venenatis tincidunt.
+                        Access your reservations, manage your profile, and enjoy exclusive benefits.
                     </p>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="login-form">
-                            <form>
-                                <div class="form-row">
-                                    <div class="control-group col-sm-6">
-                                        <label>Your Name</label>
-                                        <input type="text" class="form-control" required="required" />
-                                    </div>
-                                    <div class="control-group col-sm-6">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control" required="required" />
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="control-group col-sm-6">
-                                        <label>Your Password</label>
-                                        <input type="password" class="form-control" required="required" />
-                                    </div>
-                                    <div class="control-group col-sm-6">
-                                        <label>Repeat Your Password</label>
-                                        <input type="password" class="form-control" required="required" />
-                                    </div>
-                                </div>
-                                <div class="button"><button type="submit">Registration</button></div>
-                            </form>
+                <div class="login-form">
+                    <form method="POST" action="login">
+                        {% csrf_token %}
+                        <div class="form-row" style="width: 82%; margin: auto;">
+                            <div class="control-group col-sm-6">
+                                <label>Username</label>
+                                <input type="text" class="form-control" required="required" name="username"/>
+                            </div>
+                            <div class="control-group col-sm-6">
+                                <label>Your Password</label>
+                                <input type="password" class="form-control" required="required" name="password"/>
+                            </div>
+                            {% for message in messages %}
+                            <label style="color: red; margin-left: 10px;">{{ message }}</label>
+                            {% endfor %}
                         </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="login-form">
-                            <form>
-                                <div class="form-row">
-                                    <div class="control-group col-sm-6">
-                                        <label>Your Email</label>
-                                        <input type="email" class="form-control" required="required" />
-                                    </div>
-                                    <div class="control-group col-sm-6">
-                                        <label>Your Password</label>
-                                        <input type="password" class="form-control" required="required" />
-                                    </div>
-                                </div>
-                                <div class="button"><button type="submit">Login</button></div>
-                            </form>
-                        </div>
-                    </div>
+                        <div class="button" style="text-align: center;"><button type="submit">Login</button></div>
+                    </form>
                 </div>
             </div>
         </div>
