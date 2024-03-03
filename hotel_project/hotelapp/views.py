@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from .models import Room
 
 
 # Create your views here.
@@ -76,8 +77,17 @@ def register(request):
         return render(request, 'register.html')
 
 
+# room function to display the rooms
 def room(request):
-    return render(request, 'room.html')
+    rooms = Room.objects.all()
+    modal_images = []
+    for room in rooms:
+        modal_images.extend(room.modal_images.split(','))
+    context = {
+        'rooms': rooms,
+        'modal_images': modal_images,
+    }
+    return render(request, 'room.html', context)
 
 
 def about(request):
