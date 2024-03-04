@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- Search Section Start -->
-    <form method="POST" action="check_availability">
+    <form method="POST" action="search_available_rooms">
         {% csrf_token %}
         <div id="search" style="background: #f2f2f2;">
             <div class="container">
@@ -91,7 +91,7 @@
 
 
 <!--here is django for loop to display rooms-->
-                {% for room in rooms %}
+                {% for room in available_rooms %}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
@@ -133,8 +133,8 @@
                             <div class="col-md-3">
                                 <div class="room-rate">
                                     <h3>From</h3>
-                                    <h1 style="font-size: 32px;">${{ room.price }}</h1>
-                                    <a href="#">Book Now</a>
+                                    <h1 style="font-size: 32px;">${{ room.price }}</h1>\
+                                    <a href=" {% url 'booking' %}?room_id={{ room.id }}&check_in={{ check_in }}&check_out={{ check_out }}">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
 <!-- Room Section End -->
 
 <!-- Modal for Room Section Start -->
-     {% for room in rooms %}
+     {% for room in available_rooms %}
         <div id="modal-{{ room.id }}" class="modal fade" tabindex="-1" role="dialog">
 
             <div class="modal-dialog modal-lg">

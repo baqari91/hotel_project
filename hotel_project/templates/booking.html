@@ -72,6 +72,8 @@
 <!-- Search Section End -->
 
 <!-- Booking Section Start -->
+    <form method="POST" action="booking">
+            {% csrf_token %}
         <div id="booking">
             <div class="container">
                 <div class="section-header">
@@ -88,42 +90,43 @@
                                 <div class="form-row">
                                     <div class="control-group col-md-6">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control" id="fname" placeholder="E.g. John" required="required" data-validation-required-message="Please enter first name" />
+                                        <input name="first_name" type="text" class="form-control" id="fname" placeholder="E.g. John" required="required" data-validation-required-message="Please enter first name" />
+                                        <input type="hidden" name="room_id" value="{{ room_id }}">
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="control-group col-md-6">
                                         <label>Last Name</label>
-                                        <input type="text" class="form-control" id="lname" placeholder="E.g. Sina" required="required" data-validation-required-message="Please enter last name" />
+                                        <input name="last_name" type="text" class="form-control" id="lname" placeholder="E.g. Sina" required="required" data-validation-required-message="Please enter last name" />
                                         <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="control-group col-md-6">
                                         <label>Mobile</label>
-                                        <input type="text" class="form-control" id="mobile" placeholder="E.g. +1 234 567 8900" required="required" data-validation-required-message="Please enter your mobile number" />
+                                        <input name="mobile" type="text" class="form-control" id="mobile" placeholder="E.g. +1 234 567 8900" required="required" data-validation-required-message="Please enter your mobile number" />
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="control-group col-md-6">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="E.g. email@example.com" required="required" data-validation-required-message="Please enter your email" />
+                                        <input name="email" type="email" class="form-control" id="email" placeholder="E.g. email@example.com" required="required" data-validation-required-message="Please enter your email" />
                                         <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="control-group col-md-6">
                                         <label>Check-In</label>
-                                        <input type="text" class="form-control datetimepicker-input" id="date-1" data-toggle="datetimepicker" data-target="#date-1" placeholder="E.g. MM/DD/YYYY" required="required" data-validation-required-message="Please enter date"/>
+                                        <input value="{{ check_in }}" name="check_in" type="text" class="form-control datetimepicker-input" id="date-1" data-toggle="datetimepicker" data-target="#date-1" placeholder="E.g. MM/DD/YYYY" required="required" data-validation-required-message="Please enter date"/>
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="control-group col-md-6">
                                         <label>Check-Out</label>
-                                        <input type="text" class="form-control datetimepicker-input" id="date-2" data-toggle="datetimepicker" data-target="#date-2" placeholder="E.g. MM/DD/YYYY" required="required" data-validation-required-message="Please enter date"/>
+                                        <input value="{{ check_out }}" name="check_out" type="text" class="form-control datetimepicker-input" id="date-2" data-toggle="datetimepicker" data-target="#date-2" placeholder="E.g. MM/DD/YYYY" required="required" data-validation-required-message="Please enter date"/>
                                         <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label>Special Request</label>
-                                    <input type="text" class="form-control" id="request" placeholder="E.g. Special Request" required="required" data-validation-required-message="Please enter your special request" />
+                                    <input name="special_request" type="text" class="form-control" id="request" placeholder="E.g. Special Request" required="required" data-validation-required-message="Please enter your special request" />
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="button"><button type="submit" id="bookingButton">Book Now</button></div>
@@ -133,6 +136,7 @@
                 </div>
             </div>
         </div>
+    </form>
 <!-- Booking Section End -->
 
 
