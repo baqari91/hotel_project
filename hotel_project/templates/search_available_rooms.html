@@ -7,9 +7,6 @@
         {% csrf_token %}
         <div id="search" style="background: #f2f2f2;">
             <div class="container">
-                {% for message in messages %}
-                <h2>{{ message }} </h2>
-                {% endfor %}
                 <div class="form-row">
                     <div class="control-group col-md-3">
                         <label>Check-In</label>
@@ -82,10 +79,12 @@
         <div id="rooms">
             <div class="container">
                 <div class="section-header">
-                    <h2>Our Rooms</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in mi libero. Quisque convallis, enim at venenatis tincidunt.
-                    </p>
+<!--                    <h2>Our Rooms</h2>-->
+                    {% for message in messages %}
+                    <h2>
+                        {{ message }}
+                    </h2>
+                    {% endfor %}
                 </div>
 
 
@@ -160,13 +159,13 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="port-slider">
-                                    {% for img in modal_images %}
-                                    <div>{{img}}<img src="{{ img }}"></div>
+                                    {% for room_img in room.modal_images.all %}
+                                    <div><img src="{{ room_img.image.url }}"></div>
                                     {% endfor %}
                                 </div>
                                 <div class="port-slider-nav">
-                                    {% for img in modal_images %}
-                                    <div><img src="{{ img }}"></div>
+                                    {% for room_img in room.modal_images.all %}
+                                    <div><img src="{{ room_img.image.url }}"></div>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -176,7 +175,7 @@
                                     {{ room.modal_description }}
                                 </p>
                                 <div class="modal-link">
-                                    <a href="#">Book Now</a>
+                                    <a href="{% url 'booking' %}?room_id={{ room.id }}&check_in={{ check_in }}&check_out={{ check_out }}">Book Now</a>
                                 </div>
                             </div>
                         </div>

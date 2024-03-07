@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .models import Room, Booking
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -41,43 +42,9 @@ def contact(request):
     return render(request, 'contact.html')
 
 
-# creating booking function with form
-# def booking(request):
-#
-#     if request.method == 'GET':
-#         if 'check_in' not in request.GET or 'check_out' not in request.GET:
-#             return redirect('check_availability')
-#         check_in = request.GET['check_in']
-#         check_out = request.GET['check_out']
-#
-#         context = {
-#             'check_in': check_in,
-#             'check_out': check_out,
-#
-#         }
-#         return render(request, 'booking.html', context)
-#     elif request.method == 'POST':
-#         first_name = request.POST['first_name']
-#         last_name = request.POST['last_name']
-#         email = request.POST['email']
-#         mobile = request.POST['mobile']
-#         room_id = request.POST.get('room_id')
-#         check_in = request.POST['check_in']
-#         check_out = request.POST['check_out']
-#         check_in_date = check_in.split()[0]
-#         check_out_date = check_out.split()[0]
-#         parsed_check_in = datetime.strptime(check_in_date, '%m/%d/%Y').date()
-#         parsed_check_out = datetime.strptime(check_out_date, '%m/%d/%Y').date()
-#         booking = Booking(first_name=first_name, last_name=last_name, email=email, mobile=mobile, room_id=room_id,
-#                           check_in=parsed_check_in, check_out=parsed_check_out)
-#         booking.save()
-#         return redirect('index')
-#
-#     return render(request, 'booking.html')
-
 def booking(request):
     if request.method == 'GET':
-        if 'check_in' not in request.GET or 'check_out' not in request.GET  or 'room_id' not in request.GET:
+        if 'check_in' not in request.GET or 'check_out' not in request.GET or 'room_id' not in request.GET:
             return redirect('check_availability')
 
         check_in = request.GET.get('check_in')
@@ -92,6 +59,7 @@ def booking(request):
         return render(request, 'booking.html', context)
 
     elif request.method == 'POST':
+        user = request.user
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
@@ -105,12 +73,13 @@ def booking(request):
         check_out_date = datetime.strptime(check_out.split()[0], '%m/%d/%Y').date()
 
         # Create Booking instance
-        booking = Booking(first_name=first_name, last_name=last_name, email=email, mobile=mobile, room_id=room_id,
-                                                    check_in=check_in_date, check_out=check_out_date)
+        booking = Booking(user=user, first_name=first_name, last_name=last_name, email=email, mobile=mobile, room_id=room_id,
+                          check_in=check_in_date, check_out=check_out_date)
         booking.save()
-        return redirect('index')
+        return redirect('profile')
 
     return render(request, 'booking.html')
+
 
 def login(request):
     if request.method == 'POST':
@@ -135,9 +104,13 @@ def logout(request):
     auth.logout(request)
     return redirect('/')
 
-
+@login_required
 def profile(request):
-    return render(request, 'profile.html')
+    user_booking = Booking.objects.filter(user=request.user)
+    context = {
+        'user_bookings': user_booking
+    }
+    return render(request, 'profile.html', context)
 
 
 def register(request):
@@ -184,6 +157,7 @@ def room(request):
 def about(request):
     return render(request, 'about.html')
 
+
 def search_available_rooms(request):
     if request.method == 'POST':
         check_in = request.POST['check_in']
@@ -191,8 +165,34 @@ def search_available_rooms(request):
         parsed_check_in = datetime.strptime(check_in, '%m/%d/%Y').date()
         parsed_check_out = datetime.strptime(check_out, '%m/%d/%Y').date()
 
-        available_rooms = Room.objects.exclude(booking__check_in__lte=parsed_check_out, booking__check_out__gte=parsed_check_in)
+        available_rooms = Room.objects.exclude(booking__check_in__lte=parsed_check_out,
+                                               booking__check_out__gte=parsed_check_in)
+        modal_images = []
 
-        return render(request, 'search_available_rooms.html', {'available_rooms': available_rooms, 'check_in': check_in, 'check_out': check_out})
+        for room in available_rooms:
+            images = room.modal_images.all()
+            for image in images:
+                modal_images.append(image.image.url)
+
+
+        if available_rooms.exists():
+            messages.success(request, 'The following rooms are available for the selected dates.')
+            context = {
+                'available_rooms': available_rooms,
+                'check_in': check_in,
+                'check_out': check_out,
+            }
+            return render(request, 'search_available_rooms.html', context)
+        else:
+            messages.error(request, 'Sorry, no rooms are available for the selected dates. Please try again.')
+            return redirect('search_available_rooms')
     else:
         return render(request, 'search_available_rooms.html')
+
+
+def booking_delete(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    booking.delete()
+    return redirect('profile')
+
+

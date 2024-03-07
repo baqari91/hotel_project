@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -17,31 +18,29 @@ class Room(models.Model):
         return self.name
 
 
-
 class RoomImage(models.Model):
     image = models.ImageField(upload_to='static/website/img/room-slider')
 
 
-
 class Booking(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     mobile = models.CharField(max_length=15)
     email = models.EmailField()
     check_in = models.DateField()
     check_out = models.DateField()
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
     special_request = models.TextField(blank=True, null=True)
-
 
 # class Contact(models.Model):
 #     name = models.CharField(max_length=50)
 #     email = models.EmailField()
 #     message = models.TextField()
 
- # modal_img1 = models.CharField(max_length=30, blank=True, null=True)
-    # modal_img2 = models.CharField(max_length=30, blank=True, null=True)
-    # modal_img3 = models.CharField(max_length=30, blank=True, null=True)
-    # modal_img4 = models.CharField(max_length=30, blank=True, null=True)
-    # modal_img5 = models.CharField(max_length=30, blank=True, null=True)
-    # modal_img6 = models.CharField(max_length=30, blank=True, null=True)
+# modal_img1 = models.CharField(max_length=30, blank=True, null=True)
+# modal_img2 = models.CharField(max_length=30, blank=True, null=True)
+# modal_img3 = models.CharField(max_length=30, blank=True, null=True)
+# modal_img4 = models.CharField(max_length=30, blank=True, null=True)
+# modal_img5 = models.CharField(max_length=30, blank=True, null=True)
+# modal_img6 = models.CharField(max_length=30, blank=True, null=True)

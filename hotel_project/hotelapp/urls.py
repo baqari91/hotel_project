@@ -13,5 +13,6 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('profile', views.profile, name='profile'),
     path('search_available_rooms', views.search_available_rooms, name='search_available_rooms'),
+    path('booking_delete/<int:booking_id>', views.booking_delete, name='booking_delete'),
 
 ]
