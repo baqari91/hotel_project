@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}ROYAL HOTEL | Booking {% endblock %}
 {% block content %}
 
 <!-- Search Section Start -->
-    <form method="POST" action="search_available_rooms">
+    <form method="POST" action="search_available_rooms" onsubmit="return validateDates()" >
         {% csrf_token %}
         <div id="search" style="background: #f2f2f2;">
             <div class="container">
@@ -12,7 +13,7 @@
                         <label>Check-In</label>
                         <div class="form-group">
                             <div class="input-group date" id="date-3" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#date-3" name="check_in" />
+                                <input id="check_in" type="text" class="form-control datetimepicker-input" data-target="#date-3" name="check_in" />
                                 <div class="input-group-append" data-target="#date-3" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -23,7 +24,7 @@
                         <label>Check-Out</label>
                         <div class="form-group">
                             <div class="input-group date" id="date-4" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#date-4" name="check_out"/>
+                                <input id="check_out" type="text" class="form-control datetimepicker-input" data-target="#date-4" name="check_out"/>
                                 <div class="input-group-append" data-target="#date-4" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -132,7 +133,7 @@
                             <div class="col-md-3">
                                 <div class="room-rate">
                                     <h3>From</h3>
-                                    <h1 style="font-size: 32px;">${{ room.price }}</h1>\
+                                    <h1 style="font-size: 32px;">${{ room.price }}</h1>
                                     <a href=" {% url 'booking' %}?room_id={{ room.id }}&check_in={{ check_in }}&check_out={{ check_out }}">Book Now</a>
                                 </div>
                             </div>
@@ -190,193 +191,4 @@
 
 {% endblock %}
 
-<!--                    <div class="col-md-12">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-img">-->
-<!--                                    <div class="box12">-->
-<!--                                        <img src="{% static 'website/img/room/room-2.jpg' %}">-->
-<!--                                        <div class="box-content">-->
-<!--                                            <h3 class="title">Standard Double</h3>-->
-<!--                                            <ul class="icon">-->
-<!--                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>-->
-<!--                                            </ul>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6">-->
-<!--                                <div class="room-des">-->
-<!--                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Standard Double</a></h3>-->
-<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                    <ul class="room-size">-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Size: 350 sq ft </li>-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Double(s) </li>-->
-<!--                                    </ul>-->
-<!--                                    <ul class="room-icon">-->
-<!--                                        <li class="icon-1"></li>-->
-<!--                                        <li class="icon-2"></li>-->
-<!--                                        <li class="icon-3"></li>-->
-<!--                                        <li class="icon-4"></li>-->
-<!--                                        <li class="icon-5"></li>-->
-<!--                                        <li class="icon-6"></li>-->
-<!--                                        <li class="icon-7"></li>-->
-<!--                                        <li class="icon-8"></li>-->
-<!--                                        <li class="icon-9"></li>-->
-<!--                                        <li class="icon-10"></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-rate">-->
-<!--                                    <h3>From</h3>-->
-<!--                                    <h1>$200</h1>-->
-<!--                                    <a href="#">Book Now</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <hr>-->
-<!--                    </div>-->
-
-<!--                    <div class="col-md-12">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-img">-->
-<!--                                    <div class="box12">-->
-<!--                                        <img src="{% static 'website/img/room/room-3.jpg' %}">-->
-<!--                                        <div class="box-content">-->
-<!--                                            <h3 class="title">Premium Single</h3>-->
-<!--                                            <ul class="icon">-->
-<!--                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>-->
-<!--                                            </ul>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6">-->
-<!--                                <div class="room-des">-->
-<!--                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Premium Single</a></h3>-->
-<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                    <ul class="room-size">-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Size: 200 sq ft </li>-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Single(s) </li>-->
-<!--                                    </ul>-->
-<!--                                    <ul class="room-icon">-->
-<!--                                        <li class="icon-1"></li>-->
-<!--                                        <li class="icon-2"></li>-->
-<!--                                        <li class="icon-3"></li>-->
-<!--                                        <li class="icon-4"></li>-->
-<!--                                        <li class="icon-5"></li>-->
-<!--                                        <li class="icon-6"></li>-->
-<!--                                        <li class="icon-7"></li>-->
-<!--                                        <li class="icon-8"></li>-->
-<!--                                        <li class="icon-9"></li>-->
-<!--                                        <li class="icon-10"></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-rate">-->
-<!--                                    <h3>From</h3>-->
-<!--                                    <h1>$220</h1>-->
-<!--                                    <a href="#">Book Now</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <hr>-->
-<!--                    </div>-->
-
-<!--                    <div class="col-md-12">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-img">-->
-<!--                                    <div class="box12">-->
-<!--                                        <img src="{% static 'website/img/room/room-4.jpg' %}">-->
-<!--                                        <div class="box-content">-->
-<!--                                            <h3 class="title">Silver Double</h3>-->
-<!--                                            <ul class="icon">-->
-<!--                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>-->
-<!--                                            </ul>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6">-->
-<!--                                <div class="room-des">-->
-<!--                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Silver Double</a></h3>-->
-<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                    <ul class="room-size">-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Size: 200 sq ft </li>-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Double(s) </li>-->
-<!--                                    </ul>-->
-<!--                                    <ul class="room-icon">-->
-<!--                                        <li class="icon-1"></li>-->
-<!--                                        <li class="icon-2"></li>-->
-<!--                                        <li class="icon-3"></li>-->
-<!--                                        <li class="icon-4"></li>-->
-<!--                                        <li class="icon-5"></li>-->
-<!--                                        <li class="icon-6"></li>-->
-<!--                                        <li class="icon-7"></li>-->
-<!--                                        <li class="icon-8"></li>-->
-<!--                                        <li class="icon-9"></li>-->
-<!--                                        <li class="icon-10"></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-rate">-->
-<!--                                    <h3>From</h3>-->
-<!--                                    <h1>$180</h1>-->
-<!--                                    <a href="#">Book Now</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <hr>-->
-<!--                    </div>-->
-
-<!--                    <div class="col-md-12">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-img">-->
-<!--                                    <div class="box12">-->
-<!--                                        <img src="{% static 'website/img/room/room-5.jpg' %}">-->
-<!--                                        <div class="box-content">-->
-<!--                                            <h3 class="title">Premium Double</h3>-->
-<!--                                            <ul class="icon">-->
-<!--                                                <li><a href="#" data-toggle="modal" data-target="#modal-id"><i class="fa fa-link"></i></a></li>-->
-<!--                                            </ul>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6">-->
-<!--                                <div class="room-des">-->
-<!--                                    <h3><a href="#" data-toggle="modal" data-target="#modal-id">Premium Double</a></h3>-->
-<!--                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
-<!--                                    <ul class="room-size">-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Size: 450 sq ft </li>-->
-<!--                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Double(s) </li>-->
-<!--                                    </ul>-->
-<!--                                    <ul class="room-icon">-->
-<!--                                        <li class="icon-1"></li>-->
-<!--                                        <li class="icon-2"></li>-->
-<!--                                        <li class="icon-3"></li>-->
-<!--                                        <li class="icon-4"></li>-->
-<!--                                        <li class="icon-5"></li>-->
-<!--                                        <li class="icon-6"></li>-->
-<!--                                        <li class="icon-7"></li>-->
-<!--                                        <li class="icon-8"></li>-->
-<!--                                        <li class="icon-9"></li>-->
-<!--                                        <li class="icon-10"></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-3">-->
-<!--                                <div class="room-rate">-->
-<!--                                    <h3>From</h3>-->
-<!--                                    <h1>$400</h1>-->
-<!--                                    <a href="#">Book Now</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+<!--

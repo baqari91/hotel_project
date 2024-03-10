@@ -2,86 +2,15 @@
 {% load static %}
 {% block title %}ROYAL HOTEL | Booking{% endblock %}
 {% block content %}
-<!-- Search Section Start -->
-    <form method="POST" action="search_available_rooms" onsubmit="return validateDates()" >
-        {% csrf_token %}
-        <div id="search" style="background: #f2f2f2;">
-            <div class="container">
-                <div class="form-row">
-                    <div class="control-group col-md-3">
-                        <label>Check-In</label>
-                        <div class="form-group">
-                            <div class="input-group date" id="date-3" data-target-input="nearest">
-                                <input id="check_in" type="text" class="form-control datetimepicker-input" data-target="#date-3" name="check_in" />
-                                <div class="input-group-append" data-target="#date-3" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="control-group col-md-3">
-                        <label>Check-Out</label>
-                        <div class="form-group">
-                            <div class="input-group date" id="date-4" data-target-input="nearest">
-                                <input id="check_out" type="text" class="form-control datetimepicker-input" data-target="#date-4" name="check_out"/>
-                                <div class="input-group-append" data-target="#date-4" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="control-group col-md-3">
-                        <div class="form-row">
-                            <div class="control-group col-md-6">
-                                <label>Adult</label>
-                                <select class="custom-select">
-                                    <option selected>0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </div>
-                            <div class="control-group col-md-6 kid">
-                                <label>Kid</label>
-                                <select class="custom-select">
-                                    <option selected>0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="control-group col-md-3">
-                        <button class="btn btn-block" type="submit">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-<!-- Search Section End -->
 
-<!-- Booking Section Start -->
-    <form method="POST" action="booking">
+
+<!-- Change Booking Section Start -->
+    <form method="POST" action="change_booking">
             {% csrf_token %}
         <div id="booking">
             <div class="container">
                 <div class="section-header">
-                    <h2>Room Booking</h2>
+                    <h2>Edit Booking</h2>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in mi libero. Quisque convallis, enim at venenatis tincidunt.
                     </p>
@@ -95,7 +24,8 @@
                                     <div class="control-group col-md-6">
                                         <label>First Name</label>
                                         <input name="first_name" type="text" class="form-control" id="fname" placeholder="E.g. John" required="required" data-validation-required-message="Please enter first name" />
-                                        <input type="hidden" name="room_id" value="{{ room_id }}">
+                                        <input type="hidden" name="room_id" value="{{ room_id }}" >
+                                        <input type="hidden" name="booking_id" value="{{ booking_id }}"  >
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="control-group col-md-6">
@@ -141,7 +71,7 @@
             </div>
         </div>
     </form>
-<!-- Booking Section End -->
+<!-- Change Booking Section End -->
 
 
 

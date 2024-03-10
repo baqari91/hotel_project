@@ -1,35 +1,137 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}ROYAL HOTEL | Profile{% endblock %}
 {% block content %}
 
+<div class="container">
+    <h1>Hello Dear {{ user.username }}</h1>
+    <h2>Profile</h2>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <h2>Your Upcoming Bookings</h2>
 
-<h1>Hello Dear {{ user.username }}</h1>
-<h2>Profile</h2>
-<p>Username: {{ user.username }}</p>
-<p>Email: {{ user.email }}</p>
-<h2>Your Bookings</h2>
-{% for booking in user_bookings %}
-    <h3>Room: {{ booking.room.name }}</h3>
-    <p>Check In: {{ booking.check_in }}</p>
-    <p>Check Out: {{ booking.check_out }}</p>
-    <p>First Name: {{ booking.first_name }}</p>
-    <p>Last Name: {{ booking.last_name }}</p>
-    <p>Email: {{ booking.email }}</p>
-    <p>Phone: {{ booking.phone }}</p>
-<!--    <p>Adults: {{ booking.adults }}</p>-->
-<!--    <p>Children: {{ booking.children }}</p>-->
-<!--    <p>Status: {{ booking.status }}</p>-->
-<!--    <p>Total Price: {{ booking.total_price }}</p>-->
-    <p>Special Request: {{ booking.special_request }}</p>
-<!--    <p>Created At: {{ booking.created_at }}</p>-->
-<!--    <p>Updated At: {{ booking.updated_at }}</p>-->
+    {% for message in messages %}
+    <h1 style="color: red;">{{ message }}</h1>
+    {% endfor %}
 
 
-    <a href="{% url 'booking_delete' booking.id %}">Delete</a>
-    <hr>
 
+    <!--    future bookings-->
+    {% for booking in future_bookings %}
+
+    <div class="card mb-3" style="max-width: 540px; margin: 10px; display: inline-block; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <img src="static/website/img/room/{{ booking.room.room_img }}" class="card-img-top" alt="..." >
+        <span  class=" badge text-bg-light">{{ booking.days_until_check_in }}</span>
+        <div class="card-body">
+            <h5 class="card-title"><b>Room:</b> {{ booking.room.name }}</h5>
+            <p class="card-text"><b>Check In: </b>{{ booking.check_in }}</p>
+            <p class="card-text"><b>Check Out: </b> {{ booking.check_out }}</p>
+            <p class="card-text"><b>Rent Days: </b> {{ booking.reserved_days }}</p>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-{{ booking.id }}" data-bs-whatever="@fat">Edit Booking</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-details{{ booking.id }}" data-bs-whatever="@fat">More Details</button>
+
+        </div>
+    </div>
+
+    {% endfor %}
+
+<!--    last bookings-->
+    <h2>Your Past Bookings</h2>
+    {% for booking in past_bookings %}
+    <div class="card mb-3" style="max-width: 540px; margin: 10px; display: inline-block; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <img src="static/website/img/room/{{ booking.room.room_img }}" class="card-img-top" alt="..." >
+        <span  class=" badge text-bg-light">{{ booking.days_until_check_in }}</span>
+        <div class="card-body">
+            <h5 class="card-title"><b>Room:</b> {{ booking.room.name }}</h5>
+            <p class="card-text"><b>Check In: </b>{{ booking.check_in }}</p>
+            <p class="card-text"><b>Check Out: </b> {{ booking.check_out }}</p>
+            <p class="card-text"><b>Rent Days: </b> {{ booking.reserved_days }}</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-details{{ booking.id }}" data-bs-whatever="@fat">More Details</button>
+        </div>
+    </div>
+    {% endfor %}
+
+<!-- Modal -->
+    {% for booking in future_bookings %}
+<div class="modal fade" id="modal-{{ booking.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit booking</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form action="change_booking" >
+                        <label>Check-In</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="date-3" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#date-3" name="check_in" id="check_in"/>
+                                <div class="input-group-append" data-target="#date-3" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <label>Check-Out {{ booking.id }}</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="date-4" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#date-4" name="check_out" id="check_out"/>
+                                <div class="input-group-append" data-target="#date-4" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input name="booking_id" type="hidden" value="{{ booking.id }}">
+                        <input name="room_id" type="hidden" value="{{ booking.room.id }}">
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Check Availability</button>
+                        </div>
+        </form>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
 {% endfor %}
 
+    {% for booking in user_bookings %}
+<!--  this modal for More Details -->
+<div class="modal fade" id="modal-details{{ booking.id }}" tabindex="-1" aria-labelledby="exampleModalLabels" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabels">Edit booking</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
-
+      <div class="modal-body">
+        <h3>Room: {{ booking.room.name }}</h3>
+        <p>Check In: {{ booking.check_in }}</p>
+        <p>Check Out: {{ booking.check_out }}</p>
+        <p>First Name: {{ booking.first_name }}</p>
+        <p>Last Name: {{ booking.last_name }}</p>
+        <p>Email: {{ booking.email }}</p>
+        <p>Phone: {{ booking.phone }}</p>
+<!--        <p>Adults: {{ booking.adults }}</p>-->
+<!--        <p>Children: {{ booking.children }}</p>-->
+        <p>Status: {{ booking.status }}</p>
+        <p>Total Price: {{ booking.total_price }}</p>
+        <p>Special Request: {{ booking.special_request }}</p>
+        <p>Created At: {{ booking.created_at }}</p>
+        <p>Rent Days: {{ booking.reserved_days }}</p>
+        <a href="{% url 'booking_delete' booking.id %}" class="btn btn-outline-danger" >Delete Booking</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
 {% endblock %}

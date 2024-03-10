@@ -13,6 +13,16 @@ class Room(models.Model):
     modal_name = models.CharField(max_length=50, blank=True, null=True)
     modal_description = models.TextField(blank=True, null=True)
     modal_images = models.ManyToManyField('RoomImage', related_name='rooms')
+    # i want create field for adults and children
+    # adults = models.IntegerField()
+    # children = models.IntegerField()
+    # i want create field for few rooms in one booking
+    # room_capacity = models.IntegerField()
+
+
+
+
+
 
     def __str__(self):
         return self.name
@@ -32,6 +42,16 @@ class Booking(models.Model):
     check_out = models.DateField()
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     special_request = models.TextField(blank=True, null=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # i want create field for few rooms in one booking
+    # number_of_rooms = models.IntegerField()
+    # room
+
+
+
+
+
+
 
 # class Contact(models.Model):
 #     name = models.CharField(max_length=50)
